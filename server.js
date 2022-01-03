@@ -3,7 +3,7 @@ const newsletter = express();
 const bodyParser = require("body-parser");
 const {request, response} = require("express");
 const https = require("https");
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 newsletter.use(bodyParser.urlencoded({extended: true}));
 newsletter.use(express.static("public"));
@@ -35,6 +35,7 @@ newsletter.post("/" , (request, response)=>{
     }
 
     const req = https.request(url, options, (response)=>{
+        console.log(response.statusCode);
         response.on("data", (data)=>{
             console.log(JSON.parse(data));
         })
